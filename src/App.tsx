@@ -5,12 +5,9 @@ function App() {
   React.useEffect(() => {
     console.log('ji');
   }, []);
-  setCount(2);
-
   return (
     <div>
       <input
-        value={count}
         type="text"
         placeholder="searching  for other"
         width="80px"

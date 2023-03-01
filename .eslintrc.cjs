@@ -16,10 +16,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: './react-ts-starter/tsconfig.json',
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks'],
   rules: {
     'react/react-in-jsx-scope': 0,
     'react-hooks/rules-of-hooks': 'error',
   },
-}
+};
