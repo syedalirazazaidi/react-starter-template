@@ -18,7 +18,7 @@ module.exports = {
     sourceType: 'module',
     project: './react-ts-starter/tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'react-hooks'],
+  plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 0,
     'react-hooks/rules-of-hooks': 'error',
