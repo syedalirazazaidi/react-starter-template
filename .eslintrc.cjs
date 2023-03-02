@@ -22,5 +22,11 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 0,
     'react-hooks/rules-of-hooks': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 };

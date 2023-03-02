@@ -1,21 +1,22 @@
 import React from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
-function App() {
+export function App() {
   const [count, setCount] = React.useState(0);
-  React.useEffect(() => {
-    console.log('ji');
-  }, []);
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="searching  for other"
-        width="80px"
-        name="search"
-        height="90px"
-      />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
-export default App;
+export function WrappedApp() {
+  return (
+    <HashRouter>
+      <App />
+    </HashRouter>
+  );
+}
