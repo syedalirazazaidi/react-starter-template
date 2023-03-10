@@ -16,6 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["client/vite.config.ts", ".eslintrc.cjs", "src"],
+  "include": ["client/vite.config.ts", ".eslintrc.cjs", "src", "../red_client/src/features/todos/todoService.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
