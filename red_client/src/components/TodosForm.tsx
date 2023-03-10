@@ -17,6 +17,10 @@ function TodosForm() {
       description,
     };
     dispatch(createTodo(todoown));
+    setData({
+      title: "",
+      description: "",
+    });
   };
 
   return (

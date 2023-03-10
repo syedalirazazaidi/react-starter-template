@@ -14,13 +14,13 @@ const createTodoice = async (todosData: {
     console.error(error);
   }
 };
-const getTodos = async () => {
-  const response = await axios.get(API_URL);
+const getTodoice = async () => {
+  const response = await axios.get(`${API_URL}/todos`);
   return response.data;
 };
 
 const todoService = {
   createTodoice,
-  getTodos,
+  getTodoice,
 };
 export default todoService;

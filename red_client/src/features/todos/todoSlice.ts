@@ -33,23 +33,19 @@ export const createTodo = createAsyncThunk(
     }
   }
 );
-export const getTodos = createAsyncThunk(
-  "todos/getAll",
-  async (_, thunkAPI) => {
-    try {
-      const ner = await todoService.getTodos();
-      console.log(ner, "????");
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
+export const getTodos = createAsyncThunk("todos/get", async (_, thunkAPI) => {
+  try {
+    return await todoService.getTodoice();
+  } catch (error) {
+    // const message =
+    // (error.response &&
+    //   error.response.data &&
+    //   error.response.data.message) ||
+    // error.message ||
+    // error.toString();
+    // return thunkAPI.rejectWithValue(message);
   }
-);
+});
 export const todoSlice = createSlice({
   name: "todo",
   // `createSlice` will infer the state type from the `initialState` argument
@@ -72,7 +68,6 @@ export const todoSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createTodo.fulfilled, (state, action) => {
-        console.log(action.payload, "????");
         state.isLoading = false;
         state.isSuccess = true;
         state.todos.push(action.payload);
