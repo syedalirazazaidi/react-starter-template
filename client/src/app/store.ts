@@ -1,13 +1,14 @@
 /* eslint-disable import/no-named-as-default */
 import { configureStore } from '@reduxjs/toolkit';
+import todoReducer from '../features/todoSlice';
 // eslint-disable-next-line import/no-cycle
-import todoSlice from './features/todos/todoSlice';
+// import todoReducer from '../features/todos/todoSlice';
 
 // ...
 
 export const store = configureStore({
   reducer: {
-    todo: todoSlice,
+    todos: todoReducer,
   },
 });
 
