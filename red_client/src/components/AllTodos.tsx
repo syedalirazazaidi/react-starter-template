@@ -12,8 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../app/store";
 import { getTodos } from "../features/todos/todoSlice";
-
-function AllTodos() {
+interface funProps {
+  editButtonFunc: (id: any) => void;
+}
+function AllTodos({ editButtonFunc }: funProps) {
   const [fadat, setFaData] = React.useState([]);
   const dispatch = useDispatch<AppDispatch>();
   const todosState = useSelector((state: RootState) => state.todo);
@@ -29,15 +31,41 @@ function AllTodos() {
         Your Todos...
       </Text>
 
-      {todos.map((todo: any) => (
-        <Flex justifyContent={"space-between"} py="10px" gap="20">
-          {todo.description}
-          <Box>|</Box> {todo.title}
-          <Button type="submit" colorScheme="teal">
-            Edit Todo
-          </Button>
-        </Flex>
-      ))}
+      {todos.map(
+        (todo: {
+          description:
+            | string
+            | number
+            | boolean
+            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+            | React.ReactFragment
+            | React.ReactPortal
+            | null
+            | undefined;
+          title:
+            | string
+            | number
+            | boolean
+            | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+            | React.ReactFragment
+            | React.ReactPortal
+            | null
+            | undefined;
+          _id: any;
+        }) => (
+          <Flex justifyContent={"space-between"} py="10px" gap="20">
+            {todo.description}
+            <Box>|</Box> {todo.title}
+            <Button
+              type="submit"
+              colorScheme="teal"
+              onClick={() => editButtonFunc(todo)}
+            >
+              Edit Todo
+            </Button>
+          </Flex>
+        )
+      )}
     </Box>
   );
 }

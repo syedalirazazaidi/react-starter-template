@@ -4,27 +4,41 @@ import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../app/store";
 import { createTodo } from "../features/todos/todoSlice";
-
-function TodosForm() {
-  const [data, setData] = useState({ title: "", description: "" });
+interface funProps {
+  editButtonFunc: (id: any) => void;
+  updateNew: {};
+  dataNew: any;
+  setDataNew: any;
+}
+function TodosForm({
+  setDataNew,
+  dataNew,
+  editButtonFunc,
+  updateNew,
+}: funProps) {
   const [fak, setFake] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
-  const { title, description } = data;
-
+  const { title, description } = dataNew;
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const todoown = {
       title,
       description,
     };
     if (fak === 1) {
       dispatch(createTodo(todoown));
-      setData({
+      setDataNew({
         title: "",
         description: "",
       });
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDataNew((dataPass: any) => ({
+      ...dataPass,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -33,26 +47,16 @@ function TodosForm() {
         <FormLabel>Add Todos</FormLabel>
         <Input
           placeholder="Add Todos"
-          value={data.title}
+          value={dataNew.title}
           name="title"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setData((dataPass) => ({
-              ...dataPass,
-              [e.target.name]: e.target.value,
-            }))
-          }
+          onChange={handleChange}
         />
         <Box py="10px" />
         <Input
           placeholder="Description your Todos"
-          value={data.description}
+          value={dataNew.description}
           name="description"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setData((dataPass) => ({
-              ...dataPass,
-              [e.target.name]: e.target.value,
-            }))
-          }
+          onChange={handleChange}
         />
         <Box py="10px" />
         <Button type="submit" colorScheme="green" w="full">
