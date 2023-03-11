@@ -24,7 +24,7 @@ function AllTodos() {
   }, [dispatch]);
 
   return (
-    <Box py="10px">
+    <Box py="10px" my="30px">
       <Text fontWeight="500" fontSize="24px" textAlign="center">
         Your Todos...
       </Text>

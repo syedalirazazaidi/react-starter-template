@@ -7,8 +7,10 @@ import { createTodo } from "../features/todos/todoSlice";
 
 function TodosForm() {
   const [data, setData] = useState({ title: "", description: "" });
+  const [fak, setFake] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
   const { title, description } = data;
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -16,11 +18,13 @@ function TodosForm() {
       title,
       description,
     };
-    dispatch(createTodo(todoown));
-    setData({
-      title: "",
-      description: "",
-    });
+    if (fak === 1) {
+      dispatch(createTodo(todoown));
+      setData({
+        title: "",
+        description: "",
+      });
+    }
   };
 
   return (
