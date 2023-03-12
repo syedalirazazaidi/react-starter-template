@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import todoService from "./todoService";
 // import { RootState } from '../../store';
+import axios from "axios";
 interface IntialStateProp {
   todos: [];
   isError: boolean;
@@ -17,6 +18,7 @@ const initialState: any = {
   isLoading: false,
   message: "",
 };
+const API_URL = "http://localhost:8000";
 export const createTodo = createAsyncThunk(
   "todos/create",
   async (todoData: { title: string; description: string }, thunkAPI) => {
@@ -33,17 +35,42 @@ export const createTodo = createAsyncThunk(
     }
   }
 );
+export const updateTodo = createAsyncThunk(
+  "todos/update",
+  async (updateNew: any, { rejectWithValue }) => {
+    console.log(updateNew);
+    // {_id: '640ce8b85b1169351fde7ee6', title: 'ali raza', description: 'zaidi', done: false, createdAt: '2023-03-11T20:46:48.416Z', …}
+    try {
+      const { _id, title, description, createdAt } = updateNew;
+      console.log(title, _id, description);
+      console.log(`http://localhost:8000/todos${_id}`);
+
+      const response = await axios.put(
+        `http://localhost:8000/todos${_id}`,
+        updateNew
+        //   `${API_URL} /todos${_id}`, {
+        //   _id,
+        //   title,
+        //   description,
+        // }
+      );
+      console.log(response);
+      return response.data;
+    } catch (error: any) {
+      console.log(error.response);
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
 export const getTodos = createAsyncThunk("todos/get", async (_, thunkAPI) => {
   try {
     return await todoService.getTodoice();
-  } catch (error) {
-    // const message =
-    // (error.response &&
-    //   error.response.data &&
-    //   error.response.data.message) ||
-    // error.message ||
-    // error.toString();
-    // return thunkAPI.rejectWithValue(message);
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    return thunkAPI.rejectWithValue(message);
   }
 });
 export const todoSlice = createSlice({
@@ -90,6 +117,20 @@ export const todoSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(updateTodo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        console.log(action.payload, "????");
+        // state.isLoading = false;
+        // state.isSuccess = true;
+        // state.todos = action.payload;
+      })
+      .addCase(updateTodo.rejected, (state, action) => {
+        // state.isLoading = false;
+        // state.isError = true;
+        // state.message = action.payload;
       });
   },
 });

@@ -6,10 +6,12 @@ import Header from "../components/Header";
 import TodosForm from "../components/TodosForm";
 
 function Home() {
-  const [update, SetUpdate] = useState({});
+  const [fak, setFake] = useState(1);
+  const [update, SetUpdate] = useState();
   const [data, setData] = useState({ title: "", description: "" });
   const editButton: any = (todo: any) => {
     SetUpdate(todo);
+    setFake(2);
     setData({
       title: todo.title,
       description: todo.description,
@@ -27,6 +29,8 @@ function Home() {
           updateNew={update}
           setDataNew={setData}
           dataNew={data}
+          setFakeNew={setFake}
+          fakNew={fak}
         />
         <AllTodos editButtonFunc={editButton} />
       </VStack>

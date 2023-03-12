@@ -3,34 +3,45 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../app/store";
-import { createTodo } from "../features/todos/todoSlice";
+import { createTodo, updateTodo } from "../features/todos/todoSlice";
 interface funProps {
   editButtonFunc: (id: any) => void;
-  updateNew: {};
+  updateNew: any;
   dataNew: any;
   setDataNew: any;
+  setFakeNew: (numb: number) => void;
+  fakNew: number;
 }
 function TodosForm({
   setDataNew,
   dataNew,
   editButtonFunc,
   updateNew,
+  setFakeNew,
+  fakNew,
 }: funProps) {
-  const [fak, setFake] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
   const { title, description } = dataNew;
+  console.log(updateNew?._id, "LLL");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const todoown = {
       title,
       description,
     };
-    if (fak === 1) {
+    if (fakNew === 1) {
       dispatch(createTodo(todoown));
       setDataNew({
         title: "",
         description: "",
       });
+    }
+    if (fakNew === 2) {
+      dispatch(updateTodo(updateNew));
+      // setDataNew({
+      //   title: "",
+      //   description: "",
+      // });
     }
   };
 
