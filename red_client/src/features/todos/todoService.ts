@@ -14,6 +14,18 @@ const createTodoice = async (todosData: {
     console.error(error);
   }
 };
+const updateTodo = async (textData: any) => {
+  console.log(textData, "IIII");
+  const { _id, title, description } = textData;
+  console.log(`${API_URL}/todos${_id}`);
+  const response = await axios.put(`${API_URL}/${_id}`, {
+    title,
+    description,
+  });
+  // API_URL + currentId
+  console.log(response, "%%%");
+  return response.data;
+};
 const getTodoice = async () => {
   const response = await axios.get(`${API_URL}/todos`);
   return response.data;
@@ -22,5 +34,6 @@ const getTodoice = async () => {
 const todoService = {
   createTodoice,
   getTodoice,
+  updateTodo,
 };
 export default todoService;

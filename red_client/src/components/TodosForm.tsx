@@ -22,7 +22,7 @@ function TodosForm({
 }: funProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { title, description } = dataNew;
-  console.log(updateNew?._id, "LLL");
+  console.log(updateNew, "LLL");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const todoown = {
@@ -36,7 +36,17 @@ function TodosForm({
         description: "",
       });
     }
+
     if (fakNew === 2) {
+      const { title, description } = dataNew;
+
+      const newtodoown = {
+        title,
+        description,
+      };
+      console.log(updateNew._id, "$$$", newtodoown);
+      const { _id } = updateNew;
+      console.log(_id);
       dispatch(updateTodo(updateNew));
       // setDataNew({
       //   title: "",

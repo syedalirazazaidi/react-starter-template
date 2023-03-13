@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import todoService from "./todoService";
 // import { RootState } from '../../store';
-import axios from "axios";
 interface IntialStateProp {
   todos: [];
   isError: boolean;
@@ -36,32 +36,45 @@ export const createTodo = createAsyncThunk(
   }
 );
 export const updateTodo = createAsyncThunk(
-  "todos/update",
-  async (updateNew: any, { rejectWithValue }) => {
-    console.log(updateNew);
-    // {_id: '640ce8b85b1169351fde7ee6', title: 'ali raza', description: 'zaidi', done: false, createdAt: '2023-03-11T20:46:48.416Z', …}
+  "goals/update",
+  async (edittext: any, thunkAPI) => {
     try {
-      const { _id, title, description, createdAt } = updateNew;
-      console.log(title, _id, description);
-      console.log(`http://localhost:8000/todos${_id}`);
-
-      const response = await axios.put(
-        `http://localhost:8000/todos${_id}`,
-        updateNew
-        //   `${API_URL} /todos${_id}`, {
-        //   _id,
-        //   title,
-        //   description,
-        // }
-      );
-      console.log(response);
-      return response.data;
+      const updateTodo = await todoService.updateTodo(edittext);
+      console.log(updateTodo, "KK");
+      return updateTodo;
     } catch (error: any) {
-      console.log(error.response);
-      return rejectWithValue(error.response?.data);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(error);
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
+// export const updateTodo = createAsyncThunk(
+//   "todos/update",
+//   async (id: any, updateNew: any) => {
+//     console.log(updateNew, id, "JLL");
+//     // {_id: '640ce8b85b1169351fde7ee6', title: 'ali raza', description: 'zaidi', done: false, createdAt: '2023-03-11T20:46:48.416Z', …}
+//     try {
+//       const { _id, title, description, createdAt } = updateNew;
+//       console.log(_id);
+//       const response = await axios.put(
+//         `http://localhost:8000/todos${id}`,
+//         updateNew
+//       );
+
+//       console.log(response, "RES%%%");
+//       return response.data;
+//     } catch (error: any) {
+//       console.log(error);
+//       return error;
+//     }
+//   }
+// );
 export const getTodos = createAsyncThunk("todos/get", async (_, thunkAPI) => {
   try {
     return await todoService.getTodoice();

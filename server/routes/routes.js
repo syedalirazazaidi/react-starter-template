@@ -7,6 +7,6 @@ route.post('/todos', addTodo)
 
 route.get('/todos', getAllTodos)
 
-route.put('/todos/:id', updateTodos)
+route.put('/:id', updateTodos)
 
 export default route
